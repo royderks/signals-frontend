@@ -1,4 +1,5 @@
 #!groovy
+String BRANCH = "${env.BRANCH_NAME}"
 
 def tryStep(String message, Closure block, Closure tearDown = null) {
     try {
@@ -18,7 +19,17 @@ def tryStep(String message, Closure block, Closure tearDown = null) {
 
 node {
     stage("Checkout") {
-        checkout scm
+      checkout scm
+    }
+
+    if (BRANCH != 'master') {
+      stage('Deploy Test branch (bakkie)') {
+        timeout(5) {
+          tryStep "deploy for test", {
+            sh "internals/bakkie.sh ${BRANCH_NAME}"
+          }
+        }
+      }
     }
 
     stage("Unit and Integration") {
@@ -35,23 +46,20 @@ node {
     }
 }
 
-node {
-    stage("Build acceptance image") {
-        tryStep "build", {
-            def image = docker.build("build.app.amsterdam.nl:5000/ois/signalsfrontend:${env.BUILD_NUMBER}",
-                "--shm-size 1G " +
-                "--build-arg BUILD_ENV=acc " +
-                "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
-                ". ")
-            image.push()
+if (BRANCH == "master") {
+
+    node {
+        stage("Build acceptance image") {
+            tryStep "build", {
+                def image = docker.build("build.app.amsterdam.nl:5000/ois/signalsfrontend:${env.BUILD_NUMBER}",
+                    "--shm-size 1G " +
+                    "--build-arg BUILD_ENV=acc " +
+                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                    ". ")
+                image.push()
+            }
         }
     }
-}
-
-
-String BRANCH = "${env.BRANCH_NAME}"
-
-if (BRANCH == "master") {
 
     node {
         stage('Push acceptance image') {
@@ -77,7 +85,7 @@ if (BRANCH == "master") {
 
     stage('Waiting for approval') {
         slackSend channel: '#ci-channel', color: 'warning', message: 'Signals-frontend is waiting for Production Release - please confirm'
-        timeout(10) {
+        timeout(5) {
           input "Deploy to Production?"
         }
     }
