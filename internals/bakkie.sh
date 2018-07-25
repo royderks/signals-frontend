@@ -10,6 +10,7 @@ echo Build distribution of this branch
 export NODE_ENV=development
 
 rm -rf node_modules
+npm install
 npm run build:acc
 
 echo Publish distribution in web-dir
