@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<History /> should render correctly 1`] = `
+<section
+  className="history"
+>
+  <h4>
+    Historie
+  </h4>
+  <div
+    className="history__item"
+    key="UPDATE_STATUS_6146"
+  >
+    <div
+      className="history__item-header"
+    >
+      <span
+        className="history__item-header-when"
+      >
+        19-06-2019
+      </span>
+      <span
+        className="history__item-header-when"
+      >
+        14:02
+      </span>
+      s.l.kok@amsterdam.nl
+    </div>
+    <div
+      className="history__item-action"
+    >
+      Update status naar: Ingepland
+    </div>
+    <div
+      className="history__item-description pre-wrap"
+    />
+  </div>
+  <div
+    className="history__item"
+    key="UPDATE_STATUS_6145"
+  >
+    <div
+      className="history__item-header"
+    >
+      <span
+        className="history__item-header-when"
+      >
+        19-06-2019
+      </span>
+      <span
+        className="history__item-header-when"
+      >
+        13:16
+      </span>
+      sia@techtek.eu
+    </div>
+    <div
+      className="history__item-action"
+    >
+      Update status naar: Ingepland
+    </div>
+    <div
+      className="history__item-description pre-wrap"
+    >
+      Voor het oplossen van uw melding hebben we helaas wat meer tijd nodig.
+
+Dit kan een aantal oorzaken hebben:
+o Als er door de aannemer gegraven moet worden, dient er eerst een bodemonderzoek te worden uitgevoerd. 
+o Soms moet er extra werk en aanvullende maatregelen worden ingepland. Bijvoorbeeld de verlichting boven een trambaan, dat samen met het GVB moet worden hersteld.
+o Er moet materiaal besteld worden dat niet op voorraad is.
+
+U ontvangt bericht wanneer we uw melding hebben afgerond.
+
+U kunt op werkdagen tijdens kantooruren ook bellen naar telefoonnummer 020 254 5216. Heeft u een vraag over uw melding, vermeld dan het meldingsnummer.
+    </div>
+  </div>
+  <div
+    className="history__item"
+    key="UPDATE_STATUS_6144"
+  >
+    <div
+      className="history__item-header"
+    >
+      <span
+        className="history__item-header-when"
+      >
+        19-06-2019
+      </span>
+      <span
+        className="history__item-header-when"
+      >
+        13:16
+      </span>
+      sia@techtek.eu
+    </div>
+    <div
+      className="history__item-action"
+    >
+      Update status naar: In afwachting van behandeling
+    </div>
+    <div
+      className="history__item-description pre-wrap"
+    />
+  </div>
+</section>
+`;

@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Location /> should render correctly with address 1`] = `
+<dl
+  className="location"
+>
+  <dt
+    className="location__definition"
+  >
+    Locatie
+  </dt>
+  <dd
+    className="location__value"
+  >
+    <button
+      className="location__value-button-edit incident-detail__button--edit"
+      onClick={[MockFunction]}
+    />
+    <button
+      className="location__value-button-show"
+      onClick={[MockFunction]}
+    >
+      <Component
+        hideAttribution={true}
+        hideZoomControls={true}
+        value={
+          Object {
+            "address": Object {
+              "huisletter": "",
+              "huisnummer": "48",
+              "huisnummer_toevoeging": "",
+              "openbare_ruimte": "Plantage Middenlaan",
+              "postcode": "1018DH",
+              "woonplaats": "Amsterdam",
+            },
+            "address_text": "Plantage Middenlaan 48 1018DH Amsterdam",
+            "bag_validated": false,
+            "buurt_code": "A08d",
+            "created_by": null,
+            "extra_properties": null,
+            "geometrie": Object {
+              "coordinates": Array [
+                4.913291931152344,
+                52.36582256756977,
+              ],
+              "type": "Point",
+            },
+            "id": 3158,
+            "stadsdeel": "A",
+          }
+        }
+        zoom="10"
+      />
+    </button>
+    <div
+      className="location__value-address"
+    >
+      <div>
+        Stadsdeel: 
+        Centrum
+      </div>
+      <div>
+        Plantage Middenlaan
+         
+        48
+      </div>
+      <div>
+        1018DH
+         
+        Amsterdam
+      </div>
+    </div>
+  </dd>
+</dl>
+`;
+
+exports[`<Location /> should render correctly with address and huisletter and huisnummer_toevoeging 1`] = `
+<dl
+  className="location"
+>
+  <dt
+    className="location__definition"
+  >
+    Locatie
+  </dt>
+  <dd
+    className="location__value"
+  >
+    <button
+      className="location__value-button-edit incident-detail__button--edit"
+      onClick={[MockFunction]}
+    />
+    <button
+      className="location__value-button-show"
+      onClick={[MockFunction]}
+    >
+      <Component
+        hideAttribution={true}
+        hideZoomControls={true}
+        value={
+          Object {
+            "address": Object {
+              "huisletter": "A",
+              "huisnummer": "48",
+              "huisnummer_toevoeging": "3",
+              "openbare_ruimte": "Plantage Middenlaan",
+              "postcode": "1018DH",
+              "woonplaats": "Amsterdam",
+            },
+            "address_text": "Plantage Middenlaan 48 1018DH Amsterdam",
+            "bag_validated": false,
+            "buurt_code": "A08d",
+            "created_by": null,
+            "extra_properties": null,
+            "geometrie": Object {
+              "coordinates": Array [
+                4.913291931152344,
+                52.36582256756977,
+              ],
+              "type": "Point",
+            },
+            "id": 3158,
+            "stadsdeel": "A",
+          }
+        }
+        zoom="10"
+      />
+    </button>
+    <div
+      className="location__value-address"
+    >
+      <div>
+        Stadsdeel: 
+        Centrum
+      </div>
+      <div>
+        Plantage Middenlaan
+         
+        48
+        A
+        -3
+      </div>
+      <div>
+        1018DH
+         
+        Amsterdam
+      </div>
+    </div>
+  </dd>
+</dl>
+`;
+
+exports[`<Location /> should render correctly without address (only geo) 1`] = `
+<dl
+  className="location"
+>
+  <dt
+    className="location__definition"
+  >
+    Locatie
+  </dt>
+  <dd
+    className="location__value"
+  >
+    <button
+      className="location__value-button-edit incident-detail__button--edit"
+      onClick={[MockFunction]}
+    />
+    <button
+      className="location__value-button-show"
+      onClick={[MockFunction]}
+    >
+      <Component
+        hideAttribution={true}
+        hideZoomControls={true}
+        value={
+          Object {
+            "address": undefined,
+            "address_text": undefined,
+            "bag_validated": false,
+            "buurt_code": "A08d",
+            "created_by": null,
+            "extra_properties": null,
+            "geometrie": Object {
+              "coordinates": Array [
+                4.913291931152344,
+                52.36582256756977,
+              ],
+              "type": "Point",
+            },
+            "id": 3158,
+            "stadsdeel": "A",
+          }
+        }
+        zoom="10"
+      />
+    </button>
+    Locatie is gepind op de kaart
+  </dd>
+</dl>
+`;
