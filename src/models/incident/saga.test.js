@@ -3,13 +3,20 @@ import { delay } from 'redux-saga';
 
 import { authCall, authPatchCall } from 'shared/services/api/api';
 import { REQUEST_INCIDENT, PATCH_INCIDENT, REQUEST_ATTACHMENTS, REQUEST_DEFAULT_TEXTS } from './constants';
-import { requestIncidentSuccess, requestIncidentError, patchIncidentSuccess, patchIncidentError, requestAttachmentsSuccess, requestAttachmentsError, requestDefaultTexts } from './actions';
-import watchIncidentModelSaga, { fetchIncident, patchIncident, requestAttachments } from './saga';
+import {
+  requestIncidentSuccess, requestIncidentError,
+  patchIncidentSuccess, patchIncidentError,
+  requestAttachmentsSuccess, requestAttachmentsError,
+  requestDefaultTextsSuccess, requestDefaultTextsError
+ } from './actions';
+import watchIncidentModelSaga, { fetchIncident, patchIncident, requestAttachments, requestDefaultTexts } from './saga';
+
+import { requestHistoryList } from '../history/actions';
 
 jest.mock('shared/services/api/api');
 
 describe('incidentModel saga', () => {
-  it.skip('should watchIncidentModelSaga', () => {
+  it('should watchIncidentModelSaga', () => {
     const gen = watchIncidentModelSaga();
     expect(gen.next().value).toEqual(all([
       takeLatest(REQUEST_INCIDENT, fetchIncident),
@@ -71,6 +78,7 @@ describe('incidentModel saga', () => {
     expect(gen.next().value).toEqual(authPatchCall(`${requestURL}/${id}`));
     expect(gen.next(incident).value).toEqual(call(delay, 1000)); // eslint-disable-line redux-saga/yield-effects
     expect(gen.next().value).toEqual(put(patchIncidentSuccess(payload))); // eslint-disable-line redux-saga/yield-effects
+    expect(gen.next().value).toEqual(put(requestHistoryList(id))); // eslint-disable-line redux-saga/yield-effects
   });
 
   it('should patchIncident error', () => {
@@ -103,7 +111,7 @@ describe('incidentModel saga', () => {
     expect(gen.next(attachments).value).toEqual(put(requestAttachmentsSuccess(firstThree))); // eslint-disable-line redux-saga/yield-effects
   });
 
-  it('should fetchIncident error', () => {
+  it('should requestAttachment error', () => {
     const id = 1000;
     const action = { payload: id };
     const error = new Error('404 Not Found');
@@ -111,5 +119,24 @@ describe('incidentModel saga', () => {
     const gen = requestAttachments(action);
     gen.next();
     expect(gen.throw(error).value).toEqual(put(requestAttachmentsError())); // eslint-disable-line redux-saga/yield-effects
+  });
+
+  it('should requestDefaultTexts success', () => {
+    const requestURL = 'https://acc.api.data.amsterdam.nl/signals/v1/public/terms/categories';
+    const action = { payload: { main_slug: 'foo', sub_slug: 'bar' } };
+    const texts = { results: [{ file: 1 }, { file: 2 }, { file: 3 }, { file: 4 }] };
+
+    const gen = requestDefaultTexts(action);
+    expect(gen.next().value).toEqual(authCall(`${requestURL}/foo/sub_categories/bar/status-message-templates`));
+    expect(gen.next(texts).value).toEqual(put(requestDefaultTextsSuccess(texts))); // eslint-disable-line redux-saga/yield-effects
+  });
+
+  it('should requestDefaultTexts error', () => {
+    const action = { payload: 'foo' };
+    const error = new Error('404 Not Found');
+
+    const gen = requestDefaultTexts(action);
+    gen.next();
+    expect(gen.throw(error).value).toEqual(put(requestDefaultTextsError(error))); // eslint-disable-line redux-saga/yield-effects
   });
 });

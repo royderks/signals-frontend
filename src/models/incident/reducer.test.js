@@ -11,7 +11,9 @@ import {
   REQUEST_INCIDENT, REQUEST_INCIDENT_SUCCESS, REQUEST_INCIDENT_ERROR,
   DISMISS_SPLIT_NOTIFICATION,
   PATCH_INCIDENT, PATCH_INCIDENT_SUCCESS, PATCH_INCIDENT_ERROR,
-  REQUEST_ATTACHMENTS, REQUEST_ATTACHMENTS_SUCCESS, REQUEST_ATTACHMENTS_ERROR
+  DISMISS_ERROR,
+  REQUEST_ATTACHMENTS, REQUEST_ATTACHMENTS_SUCCESS, REQUEST_ATTACHMENTS_ERROR,
+  REQUEST_DEFAULT_TEXTS, REQUEST_DEFAULT_TEXTS_SUCCESS, REQUEST_DEFAULT_TEXTS_ERROR
 }
   from './constants';
 
@@ -35,14 +37,6 @@ describe('incidentModelReducer', () => {
     },
     split: false
   };
-  // let state;
-
-  beforeEach(() => {
-    // state = fromJS({
-      // incident: {},
-      // incidentNotesList: [],
-    // });
-  });
 
   it('returns the initial state', () => {
     expect(reducer(undefined, {})).toEqual(fromJS(initialState));
@@ -192,6 +186,53 @@ describe('incidentModelReducer', () => {
     ).toEqual({
       ...expected,
       attachments: []
+    });
+  });
+
+  it('should handle the REQUEST_DEFAULT_TEXTS', () => {
+    expect(
+      incidentModelReducer(undefined, {
+        type: REQUEST_DEFAULT_TEXTS,
+        payload: 42
+      }).toJS()
+    ).toEqual({
+      ...expected,
+      defaultTexts: []
+    });
+  });
+
+  it('should handle the REQUEST_DEFAULT_TEXTS_SUCCESS', () => {
+    const payload = [{ file: 1 }, { image: 2 }];
+    expect(
+      incidentModelReducer(undefined, {
+        type: REQUEST_DEFAULT_TEXTS_SUCCESS,
+        payload
+      }).toJS()
+    ).toEqual({
+      ...expected,
+      defaultTexts: payload
+    });
+  });
+
+  it('should handle the REQUEST_DEFAULT_TEXTS_ERROR', () => {
+    expect(
+      incidentModelReducer(undefined, {
+        type: REQUEST_DEFAULT_TEXTS_ERROR
+      }).toJS()
+    ).toEqual({
+      ...expected,
+      defaultTexts: []
+    });
+  });
+
+  it('should handle the DISMISS_ERROR', () => {
+    expect(
+      incidentModelReducer(undefined, {
+        type: DISMISS_ERROR
+      }).toJS()
+    ).toEqual({
+      ...expected,
+      error: false
     });
   });
 
