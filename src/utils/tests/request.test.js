@@ -2,7 +2,8 @@
  * Test the request function
  */
 
-import request from './request';
+import 'whatwg-fetch';
+import request from '../request';
 
 describe('request', () => {
   // Before each test, stub the fetch function
@@ -23,10 +24,10 @@ describe('request', () => {
       window.fetch.mockReturnValue(Promise.resolve(res));
     });
 
-    it('should format the response correctly', (done) => {
+    it('should format the response correctly', done => {
       request('/thisurliscorrect')
         .catch(done)
-        .then((json) => {
+        .then(json => {
           expect(json.hello).toBe('world');
           done();
         });
@@ -44,10 +45,10 @@ describe('request', () => {
       window.fetch.mockReturnValue(Promise.resolve(res));
     });
 
-    it('should return null on 204 response', (done) => {
+    it('should return null on 204 response', done => {
       request('/thisurliscorrect')
         .catch(done)
-        .then((json) => {
+        .then(json => {
           expect(json).toBeNull();
           done();
         });
@@ -61,30 +62,6 @@ describe('request', () => {
         status: 404,
         statusText: 'Not Found',
         headers: {
-          'Content-type': 'text/html',
-        },
-      });
-
-      window.fetch.mockReturnValue(Promise.resolve(res));
-    });
-
-    it('should catch errors', (done) => {
-      request('/thisdoesntexist')
-        .catch((err) => {
-          expect(err.response.status).toBe(404);
-          expect(err.response.statusText).toBe('Not Found');
-          done();
-        });
-    });
-  });
-
-  describe('stubbing error json response', () => {
-    // Before each test, pretend we got an unsuccessful response
-    beforeEach(() => {
-      const res = new Response('{"message":"too late"}', {
-        status: 412,
-        statusText: 'Precondition Failed',
-        headers: {
           'Content-type': 'application/json',
         },
       });
@@ -92,17 +69,12 @@ describe('request', () => {
       window.fetch.mockReturnValue(Promise.resolve(res));
     });
 
-    it('should catch json errors', (done) => {
-      request('/thisdoesntexist')
-        .then((json) => {
-          expect(json.message).toBe('too late');
-          done();
-        })
-        .catch((err) => {
-          expect(err.response.status).toBe(412);
-          expect(err.response.statusText).toBe('Precondition Failed');
-          done();
-        });
+    it('should catch errors', done => {
+      request('/thisdoesntexist').catch(err => {
+        expect(err.response.status).toBe(404);
+        expect(err.response.statusText).toBe('Not Found');
+        done();
+      });
     });
   });
 });

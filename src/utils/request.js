@@ -1,5 +1,3 @@
-import 'whatwg-fetch';
-
 /**
  * Parses the JSON returned by a network request
  *
@@ -21,13 +19,9 @@ function parseJSON(response) {
  *
  * @return {object|undefined} Returns either the response, or throws an error
  */
-async function checkStatus(response) {
+function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
-  }
-
-  if (response.headers.get('Content-Type') === 'application/json') {
-    response.jsonBody = await response.json();
   }
 
   const error = new Error(response.statusText);

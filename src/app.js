@@ -13,10 +13,8 @@ import 'url-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import moment from 'moment';
-import 'moment/src/locale/nl';
-import { createBrowserHistory } from 'history';
+import { ConnectedRouter } from 'connected-react-router';
+import history from 'utils/history';
 import 'leaflet/dist/leaflet';
 
 
@@ -32,7 +30,6 @@ import LanguageProvider from 'containers/LanguageProvider';
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-webpack-loader-syntax */
 import '!file-loader?name=[name].[ext]!./images/favicon.png';
-import '!file-loader?name=[name].[ext]!./manifest.json';
 import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
 /* eslint-enable import/no-webpack-loader-syntax */
 
@@ -47,12 +44,9 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-// load locale for date formatting
-moment.locale('nl');
 
 // Create redux store with history
 const initialState = {};
-const history = createBrowserHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
@@ -108,4 +102,3 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'acceptanc
 // Authenticate and start the authorization process
 const credentials = authenticate();
 store.dispatch(authenticateUser(credentials));
-
