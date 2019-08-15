@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose, bindActionCreators } from 'redux';
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-
 import { makeSelectCategories } from 'containers/App/selectors';
 import {
   requestIncidents as onRequestIncidents,
@@ -14,11 +11,10 @@ import {
   mainCategoryFilterSelectionChanged as onMainCategoryFilterSelectionChanged,
 } from 'signals/incident-management/containers/IncidentOverviewPage/actions';
 import makeSelectOverviewPage from 'signals/incident-management/containers/IncidentOverviewPage/selectors';
+import { makeSelectActiveFilter } from 'models/filter/selectors';
 import FilterForm from 'signals/incident-management/components/FilterForm';
 
-import saga from './saga';
-import reducer from './reducer';
-import { filterSaved, filterUpdated, filterCleared, getFilters } from './actions';
+import { filterSaved, filterUpdated, filterCleared, getFilters } from 'models/filter/actions';
 
 export const FilterContainerComponent = (props) => (
   <FilterForm {...props} {...props.overviewpage} />
@@ -108,6 +104,7 @@ FilterContainerComponent.propTypes = {
 const mapStateToProps = createStructuredSelector({
   overviewpage: makeSelectOverviewPage(),
   categories: makeSelectCategories(),
+  filter: makeSelectActiveFilter,
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -129,11 +126,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'incidentManagementFilter', reducer });
-const withSaga = injectSaga({ key: 'incidentManagementFilter', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(FilterContainerComponent);
+export default compose(withConnect)(FilterContainerComponent);

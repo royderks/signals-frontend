@@ -24,6 +24,7 @@ export const initialState = fromJS({
 function overviewPageReducer(state = initialState, action) {
   switch (action.type) {
     case REQUEST_INCIDENTS:
+      console.log('req', action.payload);
       return state
         .set('loading', true)
         .set('error', false);
@@ -38,7 +39,7 @@ function overviewPageReducer(state = initialState, action) {
         .set('loading', false);
     case FILTER_INCIDENTS_CHANGED:
       return state
-        .set('filter', action.payload)
+        .set('filter', fromJS(action.payload))
         .set('page', 1);
     case PAGE_INCIDENTS_CHANGED:
       return state

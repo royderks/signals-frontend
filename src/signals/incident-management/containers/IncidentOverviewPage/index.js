@@ -13,6 +13,7 @@ import {
   makeSelectError,
   makeSelectCategories,
 } from 'containers/App/selectors';
+import { makeSelectActiveFilter } from 'models/filter/selectors';
 import LoadingIndicator from 'shared/components/LoadingIndicator';
 import makeSelectOverviewPage, { makeSelectIncidentsCount } from './selectors';
 import reducer from './reducer';
@@ -26,9 +27,11 @@ export const IncidentOverviewPageContainerComponent = ({
   onRequestIncidents,
   overviewpage,
   incidentsCount,
+  activeFilter,
   onIncidentSelected,
 }) => {
   useEffect(() => {
+    // onRequestIncidents({ filter: activeFilter });
     onRequestIncidents({});
   }, []);
 
@@ -50,6 +53,7 @@ export const IncidentOverviewPageContainerComponent = ({
                 onRequestIncidents={onRequestIncidents}
                 sort={sort}
                 incidentsCount={incidentsCount}
+                activeFilter={activeFilter}
                 {...rest}
               />
             )}
@@ -79,6 +83,7 @@ IncidentOverviewPageContainerComponent.propTypes = {
   }).isRequired,
   categories: PropTypes.shape({}).isRequired,
   incidentsCount: PropTypes.number,
+  activeFilter: PropTypes.object,
 
   onRequestIncidents: PropTypes.func.isRequired,
   onIncidentSelected: PropTypes.func.isRequired,
@@ -90,6 +95,7 @@ const mapStateToProps = createStructuredSelector({
   categories: makeSelectCategories(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  activeFilter: makeSelectActiveFilter,
 });
 
 export const mapDispatchToProps = (dispatch) =>

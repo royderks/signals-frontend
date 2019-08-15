@@ -1,13 +1,13 @@
-import { createSelector } from 'reselect';
-import { initialState } from './reducer';
+// import { createSelector } from 'reselect';
+// import { initialState } from './reducer';
 
-const selectFilters = (state) => state.get('incidentManagementFilter') || initialState;
+// const selectFilters = (state) => state.get('incidentManagementFilter') || initialState;
 
-export const makeSelectActiveFilter = createSelector(
-  selectFilters,
-  (stateMap) => {
-    const state = stateMap.toJS();
+// export const makeSelectActiveFilter = createSelector(
+//   selectFilters,
+//   (stateMap) => {
+//     const state = stateMap.toJS();
 
-    return state.activeFilter;
-  },
-);
+//     return state.activeFilter;
+//   },
+// );

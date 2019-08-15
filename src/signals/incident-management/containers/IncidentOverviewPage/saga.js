@@ -9,6 +9,7 @@ import { requestIncidentsSuccess, requestIncidentsError, filterIncidentsChanged,
 import { makeSelectFilterParams } from './selectors';
 
 export function* fetchIncidents(action) {
+  console.log('action.payload', action.payload);
   // debugger;
   const requestURL = `${CONFIGURATION.API_ROOT}signals/v1/private/signals`;
 
@@ -27,6 +28,7 @@ export function* fetchIncidents(action) {
     } else if (params.ordering === '-days_open') {
       params.ordering = 'created_at';
     }
+    console.log('params', params);
     const incidents = yield authCall(requestURL, params);
 
     yield put(requestIncidentsSuccess(incidents));
